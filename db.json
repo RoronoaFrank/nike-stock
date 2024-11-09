@@ -1,0 +1,52 @@
+{
+  "tenisModels": [
+    {
+      "id": "8258",
+      "model": "Nike Air Zoom TR 1",
+      "price": 120,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/9e0de4e1-6862-4d96-9821-94050582defe/M+NIKE+AIR+ZOOM+TR+1.png"
+    },
+    {
+      "id": "2eae",
+      "model": "Air Pegasus Wave",
+      "price": 160,
+      "imageUrl": "https://static.nike.com/a/images/w_1280,q_auto,f_auto/bc7b1b8f-e249-4e63-a386-7c3d92842cd7/air-pegasus-wave-coconut-milk-and-picante-red-ib0612-100-release-date.jpg"
+    },
+    {
+      "id": "8eee",
+      "model": "Nike Air VaporMax",
+      "price": 210,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/651eff36-614d-4097-b6e0-61d597c4e98c/AIR+VAPORMAX+2023+FK.png"
+    },
+    {
+      "id": "0737",
+      "model": "Nike Structure 25",
+      "price": 140,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/9d38718b-1d0c-4acd-b81f-ec1bfc2201ff/NIKE+AIR+ZOOM+STRUCTURE+25.png"
+    },
+    {
+      "id": "443f",
+      "model": "Nike Zoom Vomero Roam",
+      "price": 180,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b3bddda6-c1f4-4a29-8d19-eae50f8e4747/NIKE+ZOOM+VOMERO+ROAM.png"
+    },
+    {
+      "id": "4f42",
+      "model": "Nike C1TY",
+      "price": 100,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/ce1f8589-87b7-4030-83db-38544e1ac7a5/NIKE+C1TY.png"
+    },
+    {
+      "id": "40e6",
+      "model": "Nike Pegasus 41 Premium",
+      "price": 150,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/7dc517a9-853d-4d13-8db4-dcd62c670654/AIR+ZOOM+PEGASUS+41+PRM.png"
+    },
+    {
+      "id": "08df",
+      "model": "Nike Cortez Leather",
+      "price": 90,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/db838aa6-9440-4e42-adf5-81b9141aec37/NIKE+CORTEZ.png"
+    }
+  ]
+}
