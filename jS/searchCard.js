@@ -28,7 +28,7 @@ async function searchModel(evento) {
             while (list.firstChild){
                 list.removeChild(list.firstChild);
             }
-            searchResults.forEach(card => list.appendChild(createCard(card.model, card.price, card.imageUrl)));
+            searchResults.forEach(card => list.appendChild(createCard(card.id, card.model, card.price, card.imageUrl)));
 
         }
 

@@ -60,6 +60,7 @@ async function searchCard(keyword) {
         );
 
         return filteredResults;
+        
     } catch (error) {
         console.error("Hubo un problema con la búsqueda:", error);
     }
@@ -69,6 +70,7 @@ async function searchCard(keyword) {
 
 // Eliminar tarjeta en db.json y en el DOM
 async function deleteCard(id, cardElement) {
+
     try {
         // Configurar la URL para eliminar el modelo específico
         const response = await fetch(`http://localhost:3001/tenisModels/${id}`, {
