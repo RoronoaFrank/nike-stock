@@ -1,9 +1,11 @@
 import { connectionAPI } from "./connectionAPI.js";
 import createCard from "./showCards.js";
 
+
 const searchData = document.querySelector ('[data-search]');
 const searchInput = document.querySelector('[data-keyword]');
 const clearBtn = document.querySelector('.clear-btn');
+
 
 async function searchModel(evento) {
 

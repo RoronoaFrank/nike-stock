@@ -271,8 +271,13 @@ body{
     color: var(--primary); 
 }
 
-.delete-btn {
-    width: 200px;
+.buttons {
+    display: flex;
+    justify-content: space-around;
+}
+.delete_btn,
+.edit_btn {
+    width: 90px;
     background-color: var(--primary);
     font-family: var(--font-body); 
     font-size: var(--size-button); 
@@ -286,7 +291,12 @@ body{
     
 }
 
-.delete-btn:hover {
+.edit_btn:hover {
+    background-color: var(--accent);
+    box-shadow: 0 3px 10px rgba(255, 64, 129, 0.4);
+}
+
+.delete_btn:hover {
     background-color: rgb(255, 41, 113);
     box-shadow: 0 3px 10px rgba(255, 64, 129, 0.4);
 }
