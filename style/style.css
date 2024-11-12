@@ -57,6 +57,7 @@ body{
     );
     height: 10%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 2rem;
 
@@ -68,7 +69,6 @@ body{
     font-size: var(--size-main-title);
     color: var(--white);
     font-weight: 700;
-    margin-right: 36rem;
     margin-left: 2rem;
 
 }
@@ -79,9 +79,10 @@ body{
     font-size: 1.125rem;
     font-weight: 500;
     color: var(--white);
-    gap:2%;
     display: flex;
     align-items: center;
+    gap:2%;
+    margin-right: 2rem;
 
 }
 
@@ -102,7 +103,7 @@ body{
 
 }
 
-.clear-btn {
+.clear_btn {
     position: absolute;
     right: 15px;
     top: 50%;
@@ -113,7 +114,8 @@ body{
     display: none;
 }
 
-#btnSearch {
+#btnSearch,
+#btnClear {
 
     width: 40px;
     height: 40px;
@@ -131,7 +133,8 @@ body{
 
 }
 
-#btnSearch:hover {
+#btnSearch:hover,
+#btnClear:hover {
 
     background-color: rgb(41, 182, 246);
     box-shadow: 0 4px 12px rgba(79, 195, 247, 0.4);
@@ -282,6 +285,8 @@ body{
     font-family: var(--font-body); 
     font-size: var(--size-button); 
     font-weight: 500;
+    display: flex;
+    justify-content: center;
     color: var(--white);
     border: none;
     border-radius: 0.5rem;
@@ -316,6 +321,14 @@ body{
 
 }
 
+.header_form{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+}
+
 .main_form_title{
 
     font-family: var(--font-headers);
@@ -325,6 +338,12 @@ body{
     letter-spacing: 0.05em;
     margin-bottom: 2rem;
 
+}
+
+.reset_btn{
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
 }
 
 .form_elements{

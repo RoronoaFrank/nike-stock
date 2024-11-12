@@ -4,7 +4,7 @@ import createCard from "./showCards.js";
 
 const searchData = document.querySelector ('[data-search]');
 const searchInput = document.querySelector('[data-keyword]');
-const clearBtn = document.querySelector('.clear-btn');
+const clearBtn = document.querySelector('.clear_btn');
 
 
 async function searchModel(evento) {

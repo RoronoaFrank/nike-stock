@@ -1,6 +1,6 @@
 import { connectionAPI } from "./connectionAPI.js";
 
-
+const btnClear = document.querySelector('#btnClear');
 const form = document.querySelector ('[data-form]');
 const formContainer = document.querySelector('.main_section_form');
 
@@ -69,7 +69,7 @@ async function submitCard(evento){
             if (editMode) {
                 editMode = false;
                 editCardId = null;
-                form.querySelector("button[type='submit']").textContent = "Agregar modelo";
+                form.querySelector("#bntSubmit").textContent = "Agregar modelo";
             }
 
         }, 5000);
@@ -96,10 +96,31 @@ export default function prepareEditForm(id, model, price, imageUrl) {
     document.querySelector('[data-price]').value = price;
     document.querySelector('[data-imageUrl]').value = imageUrl;
 
-    form.querySelector("button[type='submit']").textContent = "Guardar";
+    form.querySelector("#bntSubmit").textContent = "Guardar";
 
 }
 
+// Evento para limpiar campos del formulario 
+btnClear.addEventListener('click', ()=> {
 
+    // Obtener informacion ingresada en formulario
+    let model = document.querySelector ('[data-model]');
+    let price = document.querySelector('[data-price]');
+    let imageUrl = document.querySelector ('[data-imageUrl]');
+
+    // Reiniciar campos en el formulario
+    model.value = '';
+    price.value ='';
+    imageUrl.value ='';
+
+    if (editMode) {
+        editMode = false;
+        editCardId = null;
+        form.querySelector("#bntSubmit").textContent = "Agregar modelo";
+    }
+    
+})
+
+// Evento para enviar información a la base de datos
 form.addEventListener('submit', evento => submitCard(evento));
 
