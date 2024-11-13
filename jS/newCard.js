@@ -16,9 +16,9 @@ spinner.className = 'loading-spinner';
 
 const successMessage = document.createElement('div');
 successMessage.className = 'success-message';
-successMessage.textContent = '¡Modelo agregado exitosamente!';
 
 
+// Añadir elementos de feedback al contenedor del formulario
 feedbackContainer.appendChild(spinner);
 feedbackContainer.appendChild(successMessage);
 formContainer.appendChild(feedbackContainer);
@@ -42,15 +42,17 @@ async function submitCard(evento){
     try{
 
         const model = document.querySelector ('[data-model]').value;
-        const price = parseFloat(document.querySelector('[data-price]').value);
+        const price = Number(parseFloat(document.querySelector('[data-price]').value).toFixed(2));
         const imageUrl = document.querySelector ('[data-imageUrl]').value;
 
         if (editMode) {
             // Actualizar tarjeta existente
             await connectionAPI.updateCard(editCardId, model, price, imageUrl);
+            successMessage.textContent = '¡Modelo editado exitosamente!';
         } else {
             // Crear nueva tarjeta
             await connectionAPI.uploadCard(model, price, imageUrl);
+            successMessage.textContent = '¡Modelo agregado exitosamente!';
         }
 
         // Ocultar spinner y mostrar mensaje de éxito
@@ -104,14 +106,9 @@ export default function prepareEditForm(id, model, price, imageUrl) {
 btnClear.addEventListener('click', ()=> {
 
     // Obtener informacion ingresada en formulario
-    let model = document.querySelector ('[data-model]');
-    let price = document.querySelector('[data-price]');
-    let imageUrl = document.querySelector ('[data-imageUrl]');
-
-    // Reiniciar campos en el formulario
-    model.value = '';
-    price.value ='';
-    imageUrl.value ='';
+    document.querySelector ('[data-model]').value='';
+    document.querySelector('[data-price]').value='';
+    document.querySelector ('[data-imageUrl]').value='';
 
     if (editMode) {
         editMode = false;
@@ -124,3 +121,4 @@ btnClear.addEventListener('click', ()=> {
 // Evento para enviar información a la base de datos
 form.addEventListener('submit', evento => submitCard(evento));
 
+export { feedbackContainer, successMessage };

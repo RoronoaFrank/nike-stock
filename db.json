@@ -47,6 +47,12 @@
       "model": "Nike Cortez Leather",
       "price": 90,
       "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/db838aa6-9440-4e42-adf5-81b9141aec37/NIKE+CORTEZ.png"
+    },
+    {
+      "id": "5c0a",
+      "model": "Air Jordan 3 Retro \"Cement Grey\"",
+      "price": 200,
+      "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/6de142b1-f672-48fd-8d39-9c23f09dad02/AIR+JORDAN+3+RETRO.png"
     }
   ]
 }

@@ -44,6 +44,7 @@ async function updateCard(id, model, price, imageUrl) {
 
     const jsonConnection = await connection.json();
     return jsonConnection;
+
 }
 
 
@@ -87,6 +88,7 @@ async function deleteCard(id, cardElement) {
     } catch (error) {
         console.error("Error en la solicitud de eliminación:", error);
     }
+    
 }
 
 

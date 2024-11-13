@@ -15,7 +15,7 @@
 
     <header class="header">
 
-        <h1 class="store_name">NikeStock</h1>
+        <h1 class="store_name" title="Haz clic para volver al inicio">NikeStock</h1>
         <form class="search_bar" data-search>
             <label for="busqueda">Buscar:</label>
             <div class="input-container">
@@ -24,6 +24,14 @@
             </div>
             <button id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
+        <div class="overlay" id="overlay"></div>
+        <div class="confirmation-message" id="confirmationMessage">
+            <p id="confirmationText">¿Deseas eliminar este modelo?</p>
+            <div class="confirmation_btn">
+                <button id="confirmDeleteBtn">Eliminar</button>
+                <button id="cancelDeleteBtn">Cancelar</button>
+            </div>
+        </div>
 
     </header>
 
@@ -47,7 +55,7 @@
                 <input type="text" data-model id="modelName" name="modelName" placeholder="Nombre del modelo" required>
         
                 <label for="price">Precio:</label>
-                <input type="number" data-price id="price" name="price" placeholder="Precio en $" required>
+                <input type="number" data-price step="0.01" id="price" name="price" placeholder="Precio en $" required>
 
                 <label for="image">Imagen URL:</label>
                 <input type="text" data-imageUrl id="image" name="image" placeholder="URL de la imagen" required>
