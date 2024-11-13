@@ -3,7 +3,6 @@ import prepareEditForm from "./newCard.js";
 import { feedbackContainer, successMessage } from "./newCard.js";
 
 const home = document.querySelector (".store_name");
-const list = document.querySelector("[data-list]");
 
 
 // Crear la tarjeta en el DOM

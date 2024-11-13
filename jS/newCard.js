@@ -93,7 +93,9 @@ export default function prepareEditForm(id, model, price, imageUrl) {
 
     editMode = true;
     editCardId = id;
-
+    
+    document.querySelector('.main_form_title').textContent = 'EDITAR';
+    document.querySelector('#btnClear').setAttribute('title', 'Cancelar edición');
     document.querySelector('[data-model]').value = model;
     document.querySelector('[data-price]').value = price;
     document.querySelector('[data-imageUrl]').value = imageUrl;
@@ -113,6 +115,8 @@ btnClear.addEventListener('click', ()=> {
     if (editMode) {
         editMode = false;
         editCardId = null;
+        document.querySelector('.main_form_title').textContent = 'AGREGAR';
+        document.querySelector('#btnClear').setAttribute('title', 'Limpiar formulario');
         form.querySelector("#bntSubmit").textContent = "Agregar modelo";
     }
     
