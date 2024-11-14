@@ -1,51 +1,67 @@
 
-//Obtener información de la base de datos
-async function dataInDb (model, price, imageUrl){
+// Obtener información de la base de datos
+async function dataInDb(model, price, imageUrl) {
+    try {
+        const connection = await fetch("http://localhost:3001/tenisModels");
+        if (!connection.ok) throw new Error("Error en la conexión para obtener los datos");
+        
+        const jsonConnection = await connection.json();
+        return jsonConnection;
 
-    const connection = await fetch ("http://localhost:3001/tenisModels");
-    const jsonConnection = await connection.json();
-
-    return jsonConnection;
-    
+    } catch (error) {
+        console.error("Error al obtener datos de la base de datos:", error);
+        return null;  // Opcional: podrías retornar un valor para manejar el error en el llamado a la función
+    }
 }
 
-
-//Actualizar información en base de datos
+// Actualizar información en base de datos
 async function uploadCard(model, price, imageUrl) {
+    try {
+        const connection = await fetch("http://localhost:3001/tenisModels", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                model: model,
+                price: price,
+                imageUrl: imageUrl
+            })
+        });
 
-    const connection = await fetch ("http://localhost:3001/tenisModels", {
-        method: "POST",
-        headers: {"Content-type":"application/json"},
-        body:JSON.stringify({
-            model:model,
-            price:price,
-            imageUrl:imageUrl
-        })
-    });
+        if (!connection.ok) throw new Error("Error en la conexión al intentar subir datos");
 
-    const jsonConnection = connection.json();
-    return jsonConnection;
+        const jsonConnection = await connection.json();
+        return jsonConnection;
 
+    } catch (error) {
+        console.error("Error al subir la tarjeta:", error);
+        return null;
+    }
 }
-
 
 // Actualizar tarjeta existente
 async function updateCard(id, model, price, imageUrl) {
+    try {
+        const connection = await fetch(`http://localhost:3001/tenisModels/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                model: model,
+                price: price,
+                imageUrl: imageUrl
+            })
+        });
 
-    const connection = await fetch(`http://localhost:3001/tenisModels/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-            model: model,
-            price: price,
-            imageUrl: imageUrl 
-        })
-    });
+        if (!connection.ok) throw new Error("Error en la conexión al intentar actualizar la tarjeta");
 
-    const jsonConnection = await connection.json();
-    return jsonConnection;
+        const jsonConnection = await connection.json();
+        return jsonConnection;
 
+    } catch (error) {
+        console.error("Error al actualizar la tarjeta:", error);
+        return null;
+    }
 }
+
 
 
 //Buscar información en la base de datos
