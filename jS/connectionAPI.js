@@ -2,7 +2,7 @@
 // Obtener información de la base de datos
 async function dataInDb(model, price, imageUrl) {
     try {
-        const connection = await fetch("http://localhost:3001/tenisModels");
+        const connection = await fetch("https://674ccaa154e1fca9290d911c.mockapi.io/api/v1/tenisModels");
         if (!connection.ok) throw new Error("Error en la conexión para obtener los datos");
         
         const jsonConnection = await connection.json();
@@ -10,14 +10,14 @@ async function dataInDb(model, price, imageUrl) {
 
     } catch (error) {
         console.error("Error al obtener datos de la base de datos:", error);
-        return null;  // Opcional: podrías retornar un valor para manejar el error en el llamado a la función
+        return null; 
     }
 }
 
 // Actualizar información en base de datos
 async function uploadCard(model, price, imageUrl) {
     try {
-        const connection = await fetch("http://localhost:3001/tenisModels", {
+        const connection = await fetch("https://674ccaa154e1fca9290d911c.mockapi.io/api/v1/tenisModels", {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
@@ -41,21 +41,30 @@ async function uploadCard(model, price, imageUrl) {
 // Actualizar tarjeta existente
 async function updateCard(id, model, price, imageUrl) {
     try {
-        const connection = await fetch(`http://localhost:3001/tenisModels/${id}`, {
-            method: "PATCH",
+        // Obtener los datos existentes del recurso
+        const response = await fetch(`https://674ccaa154e1fca9290d911c.mockapi.io/api/v1/tenisModels/${id}`);
+        if (!response.ok) throw new Error("Error al obtener el recurso actual");
+        const existingCard = await response.json();
+
+        // Combinar los datos actuales con los nuevos
+        const updatedCard = {
+            ...existingCard,
+            model: model,
+            price: price,
+            imageUrl: imageUrl
+        };
+
+        // Enviar el recurso completo con PUT
+        const connection = await fetch(`https://674ccaa154e1fca9290d911c.mockapi.io/api/v1/tenisModels/${id}`, {
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                model: model,
-                price: price,
-                imageUrl: imageUrl
-            })
+            body: JSON.stringify(updatedCard),
         });
 
-        if (!connection.ok) throw new Error("Error en la conexión al intentar actualizar la tarjeta");
+        if (!connection.ok) throw new Error("Error al intentar actualizar la tarjeta");
 
         const jsonConnection = await connection.json();
         return jsonConnection;
-
     } catch (error) {
         console.error("Error al actualizar la tarjeta:", error);
         return null;
@@ -64,11 +73,12 @@ async function updateCard(id, model, price, imageUrl) {
 
 
 
+
 //Buscar información en la base de datos
 async function searchCard(keyword) {
 
     try {
-        const connection = await fetch("http://localhost:3001/tenisModels");
+        const connection = await fetch("https://674ccaa154e1fca9290d911c.mockapi.io/api/v1/tenisModels");
         const dataInDb = await connection.json();
 
         // Filtrar los resultados en el cliente
@@ -90,7 +100,7 @@ async function deleteCard(id, cardElement) {
 
     try {
         // Configurar la URL para eliminar el modelo específico
-        const response = await fetch(`http://localhost:3001/tenisModels/${id}`, {
+        const response = await fetch(`https://674ccaa154e1fca9290d911c.mockapi.io/api/v1/tenisModels/${id}`, {
             method: "DELETE",
         });
 

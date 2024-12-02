@@ -47,9 +47,19 @@ async function submitCard(evento){
 
         if (editMode) {
             // Actualizar tarjeta existente
-            await connectionAPI.updateCard(editCardId, model, price, imageUrl);
-            successMessage.textContent = '¡Modelo editado exitosamente!';
-        } else {
+            const updatedCard = await connectionAPI.updateCard(editCardId, model, price, imageUrl);
+            if (updatedCard) {
+                // Actualizar la tarjeta en el DOM
+                const cardElement = document.querySelector(`#card-${editCardId}`);
+                if (cardElement) {
+                    cardElement.querySelector(".model_name").textContent = updatedCard.model;
+                    cardElement.querySelector(".model_price").textContent = `Precio: $${updatedCard.price}`;
+                    cardElement.querySelector("img").src = updatedCard.imageUrl;
+                }
+                successMessage.textContent = '¡Modelo editado exitosamente!';
+            }
+        }
+         else {
             // Crear nueva tarjeta
             await connectionAPI.uploadCard(model, price, imageUrl);
             successMessage.textContent = '¡Modelo agregado exitosamente!';
@@ -89,7 +99,7 @@ async function submitCard(evento){
 
 
 // Preparar formulario para edición
-export default function prepareEditForm(id, model, price, imageUrl) {
+function prepareEditForm(id, model, price, imageUrl) {
 
     editMode = true;
     editCardId = id;
@@ -125,4 +135,4 @@ btnClear.addEventListener('click', ()=> {
 // Evento para enviar información a la base de datos
 form.addEventListener('submit', evento => submitCard(evento));
 
-export { feedbackContainer, successMessage };
+export { feedbackContainer, successMessage, prepareEditForm };

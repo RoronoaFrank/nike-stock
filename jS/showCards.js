@@ -1,6 +1,5 @@
 import { connectionAPI } from "./connectionAPI.js";
-import prepareEditForm from "./newCard.js";
-import { feedbackContainer, successMessage } from "./newCard.js";
+import { feedbackContainer, successMessage, prepareEditForm } from "./newCard.js";
 
 const home = document.querySelector (".store_name");
 
@@ -11,6 +10,7 @@ export default function createCard(id, model, price, imageUrl) {
     const card = document.createElement("li");
     card.className = "list_card";
     card.setAttribute("role", "listitem");
+    card.id = `card-${id}`;
     card.innerHTML = `
 
         <img src="${imageUrl}" class="tennis_photo" alt="Modelo de tenis">
@@ -50,8 +50,6 @@ async function handleDelete(id, cardElement) {
     const confirmationMessage = document.getElementById("confirmationMessage");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
-    const successMessage = document.getElementById("successMessage");
-    const feedbackContainer = document.getElementById("feedbackContainer");
 
     // Mostrar overlay y mensaje de confirmación
     overlay.style.display = 'block';
