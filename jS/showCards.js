@@ -5,7 +5,7 @@ const home = document.querySelector (".store_name");
 
 
 // Crear la tarjeta en el DOM
-export default function createCard(id, model, price, imageUrl) {
+function createCard(id, model, price, imageUrl) {
 
     const card = document.createElement("li");
     card.className = "list_card";
@@ -40,6 +40,8 @@ export default function createCard(id, model, price, imageUrl) {
         modelName.setAttribute("title", model);
     }
 
+    // Retornar la tarjeta creada
+    return card;
 }
 
 
@@ -79,11 +81,11 @@ async function handleDelete(id, cardElement) {
                 successMessage.classList.add('show');
                 feedbackContainer.style.display = 'flex';
 
-                // Ocultar mensaje después de 5 segundos
+                // Ocultar mensaje después de 3 segundos
                 setTimeout(() => {
                     successMessage.classList.remove('show');
                     feedbackContainer.style.display = 'none';
-                }, 5000);
+                }, 3000);
 
                 resolve(true);
             } catch (error) {
@@ -142,3 +144,7 @@ home.addEventListener('click', () => {
 
 // Llamar a la función para que se ejecute al cargar el archivo
 listOfCards();
+
+export const showCards = {
+    createCard, listOfCards
+}

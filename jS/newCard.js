@@ -1,4 +1,5 @@
 import { connectionAPI } from "./connectionAPI.js";
+import { showCards } from "./showCards.js";
 
 const btnClear = document.querySelector('#btnClear');
 const form = document.querySelector ('[data-form]');
@@ -61,15 +62,23 @@ async function submitCard(evento){
         }
          else {
             // Crear nueva tarjeta
-            await connectionAPI.uploadCard(model, price, imageUrl);
-            successMessage.textContent = '¡Modelo agregado exitosamente!';
+            const newData = await connectionAPI.uploadCard(model, price, imageUrl);
+    
+            if (newData) {
+                successMessage.textContent = '¡Modelo agregado exitosamente!';
+
+                const card = showCards.createCard(newData.id, newData.model, newData.price, newData.imageUrl)
+                card
+                ? document.querySelector(".main_list_elements").appendChild(card)
+                : console.error("No se pudo agregar la tarjeta al DOM");
+            }
         }
 
         // Ocultar spinner y mostrar mensaje de éxito
         spinner.style.display = 'none';
         successMessage.classList.add('show');
         
-        // Resetear formulario después de 5 segundos
+        // Resetear formulario después de 3 segundos
         setTimeout(() => {
             form.reset();
             form.classList.remove('form-blur');
@@ -84,7 +93,7 @@ async function submitCard(evento){
                 form.querySelector("#bntSubmit").textContent = "Agregar modelo";
             }
 
-        }, 5000);
+        }, 3000);
 
     }catch (error){
 

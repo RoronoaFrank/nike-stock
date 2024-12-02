@@ -1,5 +1,5 @@
 import { connectionAPI } from "./connectionAPI.js";
-import createCard from "./showCards.js";
+import { showCards } from "./showCards.js";
 
 
 const searchData = document.querySelector ('[data-search]');
@@ -28,7 +28,7 @@ async function searchModel(evento) {
             while (list.firstChild){
                 list.removeChild(list.firstChild);
             }
-            searchResults.forEach(card => list.appendChild(createCard(card.id, card.model, card.price, card.imageUrl)));
+            searchResults.forEach(card => list.appendChild(showCards.createCard(card.id, card.model, card.price, card.imageUrl)));
 
         }
 
