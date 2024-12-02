@@ -18,6 +18,7 @@ Bienvenid@ a NikeStock, una aplicación web que revoluciona la gestión de inven
 - MockAPI - Gestión de base de datos en la nube
 
 ## 📁 Estructura del Proyecto
+```
 NikeStock/
 │
 ├── js/
@@ -31,6 +32,7 @@ NikeStock/
 │   └── reset.css           # Normalización de estilos
 │
 └── index.html              # Punto de entrada
+```
 
 ## 💻 Formas de Acceder al Proyecto
 ### Opción 1: Sitio Web Desplegado
