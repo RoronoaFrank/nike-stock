@@ -72,6 +72,6 @@ Este proyecto representa la aplicación práctica de conocimientos adquiridos en
 ### 🚀 Desarrollado por Franck Devv
 *🎓 Ingeniero en Desarrollo de Software (en proceso) | Frontend Developer | Transformando Código en Soluciones*
 
-[www.linkedin.com/in/devfranciscocruzs](http://www.linkedin.com/in/devfranciscocruzs)
+- [LinkdIn](https://www.linkedin.com/in/devfranciscocruzs)
    
    
