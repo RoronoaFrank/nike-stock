@@ -1,0 +1,16 @@
+Tamaño de datos,Término de bÃºsqueda,Versión,Tiempo promedio (ms),Resultados encontrados
+small,2,original,0,12
+small,(vacío),original,0,20
+small,air,original,0.04,1
+small,jordan,original,0.04,1
+small,z,original,0.02,4
+medium,2,original,0.08,51
+medium,(vacío),original,0,100
+medium,air,original,0.06,13
+medium,jordan,original,0.08,7
+medium,z,original,0.28,12
+large,2,original,0.24,296
+large,(vacío),original,0.02,500
+large,air,original,0.22,64
+large,jordan,original,0.36,79
+large,z,original,0.2,62
