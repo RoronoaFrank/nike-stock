@@ -19,8 +19,8 @@ const TEST_CONFIG = {
 
 // Almacenamiento de resultados
 const benchmarkResults = {
-  original: {}, // Resultados antes de WASM
-  optimized: {}, // Resultados después de WASM
+  js: {}, // Resultados en modo JavaScript estándar
+  wasm: {}, // Resultados en modo WebAssembly
 };
 
 // Función para generar datos de prueba
@@ -45,7 +45,7 @@ function generateTestData(size) {
   return products;
 }
 
-// Función original de búsqueda (copia de tu implementación actual)
+// Original de búsqueda (copia de implementación actual)
 function originalSearch(products, searchTerm) {
   if (!searchTerm) return products;
 
@@ -57,17 +57,14 @@ function originalSearch(products, searchTerm) {
   );
 }
 
-// Función para ejecutar pruebas de rendimiento
-async function runBenchmark(isOriginal = true) {
-  const resultType = isOriginal ? "original" : "optimized";
-  const searchFunction = isOriginal ? originalSearch : optimizedSearch;
-
-  console.log(`Ejecutando pruebas de rendimiento [${resultType}]...`);
+// Ejecutar pruebas de rendimiento
+async function runBenchmark(mode = "js") {
+  console.log(`Ejecutando pruebas de rendimiento [Modo: ${mode.toUpperCase()}]...`);
 
   // Probar con diferentes tamaños de datos
   for (const [sizeKey, size] of Object.entries(TEST_CONFIG.dataSize)) {
     console.log(`\nTamaño de datos: ${sizeKey} (${size} productos)`);
-    benchmarkResults[resultType][sizeKey] = {};
+    benchmarkResults[mode][sizeKey] = {};
 
     const testData = generateTestData(size);
 
@@ -79,12 +76,12 @@ async function runBenchmark(isOriginal = true) {
       console.log(`- Prueba: ${test.description}`);
 
       // Calentar el motor JS (para resultados más precisos)
-      searchFunction(testData, test.term);
+      originalSearch(testData, test.term);
 
       // Ejecutar varias iteraciones y promediar
       for (let i = 0; i < TEST_CONFIG.iterations; i++) {
         const startTime = performance.now();
-        results = searchFunction(testData, test.term);
+        results = originalSearch(testData, test.term); // Usar aquí la función adecuada según el modo
         const endTime = performance.now();
         totalTime += endTime - startTime;
       }
@@ -93,7 +90,7 @@ async function runBenchmark(isOriginal = true) {
       console.log(`  Tiempo promedio: ${avgTime.toFixed(3)} ms`);
       console.log(`  Resultados encontrados: ${results.length}`);
 
-      benchmarkResults[resultType][sizeKey][test.term] = {
+      benchmarkResults[mode][sizeKey][test.term] = {
         time: avgTime,
         resultCount: results.length,
       };
@@ -103,9 +100,29 @@ async function runBenchmark(isOriginal = true) {
   return benchmarkResults;
 }
 
-// Función para mostrar resultados comparativos cuando tengamos ambos
+// Ejecutar pruebas en modo JS
+async function runJsBenchmark() {
+  console.log("Forzando modo JavaScript estándar...");
+  const newUrl = window.location.origin + window.location.pathname + "?wasm=false";
+  window.history.replaceState({}, "", newUrl);
+
+  await runBenchmark("js");
+  console.log("Pruebas en modo JS completadas.");
+}
+
+// Ejecutar pruebas en modo WASM
+async function runWasmBenchmark() {
+  console.log("Forzando modo WebAssembly...");
+  const newUrl = window.location.origin + window.location.pathname;
+  window.history.replaceState({}, "", newUrl);
+
+  await runBenchmark("wasm");
+  console.log("Pruebas en modo WASM completadas.");
+}
+
+// Mostrar resultados comparativos de ambos modos de búsqueda
 function displayComparison() {
-  if (!benchmarkResults.original || !benchmarkResults.optimized) {
+  if (!benchmarkResults.js || !benchmarkResults.wasm) {
     console.log(
       "No hay suficientes datos para comparar. Ejecuta ambas versiones primero."
     );
@@ -114,24 +131,21 @@ function displayComparison() {
 
   console.log("\n=== COMPARACIÓN DE RENDIMIENTO ===");
 
-  for (const sizeKey of Object.keys(benchmarkResults.original)) {
+  for (const sizeKey of Object.keys(benchmarkResults.js)) {
     console.log(`\nTamaño de datos: ${sizeKey}`);
     console.log("--------------------------------------------------------");
-    console.log("Término | Original (ms) | Optimizado (ms) | Mejora (%)");
+    console.log("Término | JS (ms) | WASM (ms) | Mejora (%)");
     console.log("--------------------------------------------------------");
 
     for (const test of TEST_CONFIG.searchTests) {
       const term = test.term || "(vacío)";
-      const original = benchmarkResults.original[sizeKey][test.term]?.time || 0;
-      const optimized =
-        benchmarkResults.optimized[sizeKey][test.term]?.time || 0;
+      const jsTime = benchmarkResults.js[sizeKey][test.term]?.time || 0;
+      const wasmTime = benchmarkResults.wasm[sizeKey][test.term]?.time || 0;
 
-      if (original && optimized) {
-        const improvement = (((original - optimized) / original) * 100).toFixed(
-          2
-        );
+      if (jsTime && wasmTime) {
+        const improvement = (((jsTime - wasmTime) / jsTime) * 100).toFixed(2);
         console.log(
-          `${term.padEnd(8)} | ${original.toFixed(3).padStart(12)} | ${optimized
+          `${term.padEnd(8)} | ${jsTime.toFixed(3).padStart(12)} | ${wasmTime
             .toFixed(3)
             .padStart(14)} | ${improvement.padStart(9)}%`
         );
@@ -141,83 +155,6 @@ function displayComparison() {
 
   console.log("\nResultados completos:");
   console.log(JSON.stringify(benchmarkResults, null, 2));
-}
-
-// Placeholder para la función optimizada (se reemplazará después)
-async function optimizedSearch(products, searchTerm) {
-  // Esta función será reemplazada por la versión WASM
-  return originalSearch(products, searchTerm);
-}
-
-// Ejecutar benchmark para la versión original
-async function runOriginalBenchmark() {
-  console.log("Ejecutando benchmark para la versión ORIGINAL...");
-  await runBenchmark(true);
-
-  // Guardar los resultados en LocalStorage para referencia futura
-  localStorage.setItem(
-    "nikestore_benchmark_original",
-    JSON.stringify(benchmarkResults.original)
-  );
-
-  console.log("Benchmark original completado y guardado.");
-  console.log(
-    "Puedes revisar los resultados en la consola o exportarlos con exportResults()"
-  );
-}
-
-// Función para exportar resultados
-function exportResults() {
-  const results = {
-    timestamp: new Date().toISOString(),
-    environment: {
-      userAgent: navigator.userAgent,
-      platform: navigator.platform,
-    },
-    results: benchmarkResults,
-  };
-
-  // Crear un blob con los resultados
-  const blob = new Blob([JSON.stringify(results, null, 2)], {
-    type: "application/json",
-  });
-  const url = URL.createObjectURL(blob);
-
-  // Crear un enlace para descargar
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "nikestore_benchmark_results.json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-// Exportar resultados como JSON
-function exportResults() {
-  const results = {
-    timestamp: new Date().toISOString(),
-    environment: {
-      userAgent: navigator.userAgent,
-      platform: navigator.platform,
-    },
-    results: benchmarkResults,
-  };
-
-  // Crear un blob con los resultados
-  const blob = new Blob([JSON.stringify(results, null, 2)], {
-    type: "application/json",
-  });
-  const url = URL.createObjectURL(blob);
-
-  // Crear un enlace para descargar
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "nikestore_benchmark_results.json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
 
 // Exportar resultados como CSV
@@ -230,22 +167,22 @@ function exportToCSV() {
     [
       "Tamaño de datos",
       "Término de búsqueda",
-      "Versión",
+      "Modo",
       "Tiempo promedio (ms)",
       "Resultados encontrados",
     ].join(",")
   );
 
-  // Iterar sobre los resultados originales y optimizados
-  for (const version in benchmarkResults) {
-    for (const sizeKey in benchmarkResults[version]) {
-      for (const term in benchmarkResults[version][sizeKey]) {
-        const result = benchmarkResults[version][sizeKey][term];
+  // Iterar sobre los resultados JS y WASM
+  for (const mode in benchmarkResults) {
+    for (const sizeKey in benchmarkResults[mode]) {
+      for (const term in benchmarkResults[mode][sizeKey]) {
+        const result = benchmarkResults[mode][sizeKey][term];
         rows.push(
           [
             sizeKey,
             term || "(vacío)",
-            version,
+            mode.toUpperCase(),
             result.time.toFixed(3),
             result.resultCount,
           ].join(",")
@@ -274,15 +211,12 @@ function exportToCSV() {
 }
 
 // Exponer funciones al ámbito global
-window.exportResults = exportResults;
+window.runJsBenchmark = runJsBenchmark;
+window.runWasmBenchmark = runWasmBenchmark;
+window.displayComparison = displayComparison;
 window.exportToCSV = exportToCSV;
-
-// Exponer funciones al ámbito global para acceder desde la consola
-window.runOriginalBenchmark = runOriginalBenchmark;
-window.exportResults = exportResults;
-window.benchmarkResults = benchmarkResults;
 
 console.log("🧪 Benchmark de NikeStore cargado.");
 console.log(
-  "Ejecuta window.runOriginalBenchmark() para iniciar las pruebas de la versión original."
+  "Ejecuta window.runJsBenchmark() o window.runWasmBenchmark() para iniciar las pruebas."
 );

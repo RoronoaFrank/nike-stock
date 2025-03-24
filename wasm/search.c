@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <emscripten.h>
+#include "../cJSON/cJSON.h"
+
 
 // Estructura para almacenar información de productos
 typedef struct {
@@ -19,6 +21,17 @@ void toLowerCase(char* str, char* result) {
     i++;
   }
   result[i] = '\0';
+}
+
+// Exportar malloc y free
+EMSCRIPTEN_KEEPALIVE
+void* my_malloc(size_t size) {
+    return malloc(size);
+}
+
+EMSCRIPTEN_KEEPALIVE
+void my_free(void* ptr) {
+    free(ptr);
 }
 
 // Optimizar búsqueda parcial de texto
